@@ -68,6 +68,8 @@ const getProfile = async (req, res) => {
 
 const updateProfile = async (req, res) => {
   try {
+        await connectDB();
+
     const { id } = req.params;
     const updateData = req.body;
     if (req.file) {
@@ -82,7 +84,8 @@ const updateProfile = async (req, res) => {
 
 const istUsersWithAuth = async (req, res) => {
   try {
-    const users = await userService.listUsers();
+    await connectDB();
+    const users = await userService.istUsersWithAuth();
     res.json(users);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -91,6 +94,7 @@ const istUsersWithAuth = async (req, res) => {
 
 const listUsers = async (req, res) => {
   try {
+    await connectDB();
     const users = await userService.listUsers();
     res.json(users);
   } catch (err) {
