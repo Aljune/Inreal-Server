@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const { PrismaClient } = require("@prisma/client");
+// const { PrismaClient } = require("@prisma/client");
 // const prisma = new PrismaClient();
 // let PrismaClient;
 // try {
@@ -20,15 +20,15 @@ const { PrismaClient } = require("@prisma/client");
 //     }
 // }
 
-let prisma;
-if (process.env.NODE_ENV === "production") {
-    prisma = new PrismaClient();
-} else {
-    if (!global.prisma) {
-        global.prisma = new PrismaClient();
-    }
-    prisma = global.prisma;
-}
+// let prisma;
+// if (process.env.NODE_ENV === "production") {
+//     prisma = new PrismaClient();
+// } else {
+//     if (!global.prisma) {
+//         global.prisma = new PrismaClient();
+//     }
+//     prisma = global.prisma;
+// }
 
 const app = express();
 // Middleware
