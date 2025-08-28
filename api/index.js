@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./db/connect");
-
+const { default: User } = require("../model/User");
 
 const app = express();
 // Middleware
@@ -45,10 +45,6 @@ app.get("/api/users", async (req, res) => {
   }
 });
 
-// ✅ 404 handler
-app.use("*", (req, res) => {
-  res.status(404).json({ error: "Endpoint not found" });
-});
 
 // // ✅ GET /users - List all users
 // app.get("/api/users", async (req, res) => {
