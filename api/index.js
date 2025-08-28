@@ -32,18 +32,18 @@ app.get("/", (req, res) => {
 });
 
 // Use it under /users
-const userRoutes = require("../modules/user");
-app.use("/api/users", userRoutes);
+// const userRoutes = require("../modules/user");
+// app.use("/api/users", userRoutes);
 
 
-if (require.main === module) {
-    const PORT = process.env.PORT || 8080;
+// if (require.main === module) {
+//     const PORT = process.env.PORT || 8080;
 
-    app.listen(PORT, () => {
-        console.log(`🚀 InReal Server running on port ${PORT}`);
-        console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
-    });
-}
+//     app.listen(PORT, () => {
+//         console.log(`🚀 InReal Server running on port ${PORT}`);
+//         console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
+//     });
+// }
 
 // --- ✅ Export for Vercel ---
 module.exports = app;
