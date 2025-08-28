@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./db/connect");
-const { default: User } = require("../model/User");
+const userRoutes = require("./modules/users/user.routes");
 
 const app = express();
 // Middleware
@@ -15,6 +15,10 @@ app.use(cors());
 app.get("/", (req, res) => {
     res.json({ msg: "Express on Vercel ✅ works!" });
 });
+
+
+// Routes
+app.use("/api/users", userRoutes);
 
 // ✅ Health check endpoint
 app.get("/api/health", async (req, res) => {
@@ -30,18 +34,6 @@ app.get("/api/health", async (req, res) => {
       status: "ERROR",
       message: err.message,
     });
-  }
-});
-
-
-// ✅ Get all users
-app.get("/api/users", async (req, res) => {
-  try {
-    await connectDB();
-    const users = await User.find();
-    res.json(users);
-  } catch (err) {
-    res.status(500).json({ error: err.message || "Failed to fetch users" });
   }
 });
 
