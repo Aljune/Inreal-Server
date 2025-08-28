@@ -15,5 +15,5 @@
       "dest": "/api/index.js"
     }
   ],
-   "buildCommand": "npx prisma generate"
+   "buildCommand": "yarn prisma generate"
 }
