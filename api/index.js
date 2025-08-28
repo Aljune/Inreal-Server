@@ -1,26 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-// const { PrismaClient } = require("@prisma/client");
-// const prisma = new PrismaClient();
-// let PrismaClient;
-// try {
-//     PrismaClient = require('@prisma/client').PrismaClient;
-//     console.log('✅ Prisma client loaded successfully');
-// } catch (error) {
-//     console.error('❌ Prisma client loading failed:', error.message);
-//     try {
-//         const { execSync } = require('child_process');
-//         console.log('🔄 Attempting to generate Prisma client...');
-//         execSync('yarn prisma generate', { stdio: 'inherit' });
-//         PrismaClient = require('@prisma/client').PrismaClient;
-//         console.log('✅ Prisma client generated and loaded');
-//     } catch (genError) {
-//         console.error('❌ Prisma generation failed:', genError.message);
-//     }
-// }
+const connectDB = require("./db/connect");
 
-const prisma = require("../utils/prisma"); // ✅ Singleton import
 
 const app = express();
 // Middleware
@@ -35,25 +17,67 @@ app.get("/", (req, res) => {
 });
 
 // ✅ Health check endpoint
-app.get("/api/health", (req, res) => {
-    res.json({
-        status: "OK",
-        message: "Server is healthy 🚀",
-        environment: process.env.NODE_ENV || 'development'
-    });
-});
-
-
-// ✅ Get users
-app.get("/api/users", async (req, res) => {
+app.get("/api/health", async (req, res) => {
   try {
-    const users = await prisma.user.findMany();
-    res.json(users);
+    await connectDB();
+    res.json({
+      status: "OK",
+      environment: process.env.NODE_ENV,
+      db: "connected",
+    });
   } catch (err) {
-    console.error("❌ Error fetching users:", err);
-    res.status(500).json({ error: "Failed to fetch users" });
+    res.status(500).json({
+      status: "ERROR",
+      message: err.message,
+    });
   }
 });
+
+
+// ✅ Get all users
+app.get("/api/users", async (req, res) => {
+  try {
+    await connectDB();
+    const users = await User.find();
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: err.message || "Failed to fetch users" });
+  }
+});
+
+// ✅ 404 handler
+app.use("*", (req, res) => {
+  res.status(404).json({ error: "Endpoint not found" });
+});
+
+// // ✅ GET /users - List all users
+// app.get("/api/users", async (req, res) => {
+//     try {
+//         const users = await prisma.users.findMany({
+//             select: {
+//                 id: true,
+//                 first_name: true,
+//                 last_name: true,
+//                 email: true,
+//                 place: true,
+//                 user_type: true,
+//                 preferences: true,
+//                 verify: true,
+//                 verification_token: true,
+//                 verified_at: true,
+//                 image: true,
+//                 qr_code: true,
+//                 created_at: true,
+//                 updated_at: true,
+//                 deleted_at: true,
+//             },
+//         });
+//         res.json(users);
+//     } catch (error) {
+//         console.error("❌ Error fetching users:", error);
+//         res.status(500).json({ error: "Failed to fetch users" });
+//     }
+// });
 
 
 // if (require.main === module) {
