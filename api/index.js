@@ -28,8 +28,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
-app.use(express.json());
-// ✅ Default route para makita nga working
+// ✅ 404 handler
+app.use("*", (req, res) => {
+  res.status(404).json({ error: "Endpoint not found" });
+});// ✅ Default route para makita nga working
 app.get("/", (req, res) => {
     res.json({ msg: "Express on Vercel ✅ works!" });
 });
@@ -44,10 +46,7 @@ app.get("/api/health", (req, res) => {
 });
 
 
-// ✅ 404 handler
-app.use("*", (req, res) => {
-  res.status(404).json({ error: "Endpoint not found" });
-});
+
 
 // if (require.main === module) {
 //     const PORT = process.env.PORT || 8080;
