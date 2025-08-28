@@ -44,6 +44,10 @@ app.get("/api/health", (req, res) => {
 });
 
 
+// ✅ 404 handler
+app.use("*", (req, res) => {
+  res.status(404).json({ error: "Endpoint not found" });
+});
 
 // if (require.main === module) {
 //     const PORT = process.env.PORT || 8080;
