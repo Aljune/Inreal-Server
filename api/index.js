@@ -32,8 +32,16 @@ app.get("/", (req, res) => {
 });
 
 // Use it under /users
-const userRoutes = require("../modules/user");
-app.use("/api/users", userRoutes);
+// const userRoutes = require("../modules/user");
+// app.use("/api/users", userRoutes);
+// ✅ Health check endpoint
+app.get("/api/health", (req, res) => {
+    res.json({
+        status: "OK",
+        message: "Server is healthy 🚀",
+        environment: process.env.NODE_ENV || 'development'
+    });
+});
 
 
 // if (require.main === module) {
