@@ -1,8 +1,15 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
+const upload = multer({ storage: multer.memoryStorage() });
 const userController = require("./user.controller");
+const { verifyToken } = require("../auth/auth.controller");
 
-router.post("/", userController.createUser);
-router.get("/", userController.getUsers);
+router.post("/create", userController.createUser);
+router.post("/resend-code", userController.resendVerificationCode);
+router.post("/verify", userController.verifyUser);
+router.get("/me", verifyToken, userController.getProfile);
+router.put("/edit/:id", verifyToken, upload.single("image"), userController.updateProfile);
+router.get("/", verifyToken, userController.listUsers);
 
 module.exports = router;
