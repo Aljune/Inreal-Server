@@ -80,6 +80,15 @@ const updateProfile = async (req, res) => {
   }
 };
 
+const istUsersWithAuth = async (req, res) => {
+  try {
+    const users = await userService.listUsers();
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 const listUsers = async (req, res) => {
   try {
     const users = await userService.listUsers();
@@ -96,4 +105,5 @@ module.exports = {
   getProfile,
   updateProfile,
   listUsers,
+  istUsersWithAuth,
 };

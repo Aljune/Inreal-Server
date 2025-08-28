@@ -62,6 +62,8 @@ const updateUserProfile = async (id, updateData) =>
 
 const listUsers = async () => User.find();
 
+const istUsersWithAuth = async () => User.find();
+
 module.exports = {
   createUser,
   findUserByEmail,
@@ -70,4 +72,5 @@ module.exports = {
   verifyUser,
   updateUserProfile,
   listUsers,
+  istUsersWithAuth,
 };

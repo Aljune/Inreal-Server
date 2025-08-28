@@ -10,6 +10,7 @@ router.post("/resend-code", userController.resendVerificationCode);
 router.post("/verify", userController.verifyUser);
 router.get("/me", verifyToken, userController.getProfile);
 router.put("/edit/:id", verifyToken, upload.single("image"), userController.updateProfile);
-router.get("/", verifyToken, userController.listUsers);
+router.get("/withAuth", verifyToken, userController.listUsers);
+router.get("/", userController.istUsersWithAuth);
 
 module.exports = router;
