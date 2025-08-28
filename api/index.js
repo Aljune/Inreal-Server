@@ -1,7 +1,8 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
 // let PrismaClient;
 // try {
 //     PrismaClient = require('@prisma/client').PrismaClient;
@@ -40,10 +41,33 @@ app.get("/api/health", (req, res) => {
     });
 });
 
+// GET /users - List all users
+app.get("/api/users", async (req, res) => {
+    const users = await prisma.users.findMany({
+        select: {
+            id: true,
+            first_name: true,
+            last_name: true,
+            email: true,
+            place: true,
+            user_type: true,
+            preferences: true,
+            verify: true,
+            verification_token: true,
+            verified_at: true,
+            image: true,
+            qr_code: true,
+            created_at: true,
+            updated_at: true,
+            deleted_at: true,
+        },
+    });
+    res.json(users);
+});
 
 // Use it under /users
-const userRoutes = require("../modules/user");
-app.use("/api/users", userRoutes);
+// const userRoutes = require("../modules/user");
+// app.use("/api/users", userRoutes);
 
 
 // ✅ 404 handler
