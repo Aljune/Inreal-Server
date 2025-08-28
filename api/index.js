@@ -29,9 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
 // ✅ 404 handler
-app.use("*", (req, res) => {
-  res.status(404).json({ error: "Endpoint not found" });
-});// ✅ Default route para makita nga working
+
 app.get("/", (req, res) => {
     res.json({ msg: "Express on Vercel ✅ works!" });
 });
