@@ -1,0 +1,39 @@
+{
+  "name": "inreal-server",
+  "version": "1.0.0",
+  "main": "api/index.js",
+  "repository": "https://github.com/Aljune/Inreal-Server.git",
+  "author": "degamAljune <degamoaljune14@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon api/index.js",
+    "start": "node api/index.js",
+    "build": "npx prisma generate",
+    "vercel-build": "npx prisma generate",
+    "postinstall": "npx prisma generate",
+    "migrate:dev": "npx prisma migrate dev",
+    "migrate:deploy": "yarn prisma migrate deploy",
+    "studio": "npx prisma studio",
+    "db:pull": "npx prisma db pull",
+    "db:push": "npx prisma db push"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.15.0",
+    "bcrypt": "^6.0.0",
+    "cloudinary": "^2.7.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
+    "multer-storage-cloudinary": "^4.0.0",
+    "nodemailer": "^7.0.5",
+    "prisma": "^6.15.0",
+    "qrcode": "^1.5.4",
+    "streamifier": "^0.1.1",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

@@ -1,0 +1,200 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+type EmbeddedMoviesAwards {
+  nominations Int
+  text        String
+  wins        Int
+}
+
+type EmbeddedMoviesImdb {
+  id     Int
+  /// Multiple data types found: String: 0.3%, Float: 99.7% out of 1000 sampled entries
+  rating Json
+  /// Multiple data types found: String: 0.3%, Int: 99.7% out of 1000 sampled entries
+  votes  Json
+}
+
+type EmbeddedMoviesTomatoes {
+  boxOffice   String?
+  consensus   String?
+  critic      EmbeddedMoviesTomatoesCritic?
+  dvd         DateTime?                     @db.Date
+  fresh       Int?
+  lastUpdated DateTime                      @db.Date
+  production  String?
+  rotten      Int?
+  viewer      EmbeddedMoviesTomatoesViewer
+  website     String?
+}
+
+type EmbeddedMoviesTomatoesCritic {
+  meter      Int
+  numReviews Int
+  rating     Float
+}
+
+type EmbeddedMoviesTomatoesViewer {
+  meter      Int?
+  numReviews Int
+  rating     Float
+}
+
+type MoviesAwards {
+  nominations Int
+  text        String
+  wins        Int
+}
+
+type MoviesImdb {
+  id     Int
+  /// Multiple data types found: String: 0.1%, Float: 99.9% out of 1000 sampled entries
+  rating Json
+  /// Multiple data types found: String: 0.1%, Int: 99.9% out of 1000 sampled entries
+  votes  Json
+}
+
+type MoviesTomatoes {
+  boxOffice   String?
+  consensus   String?
+  critic      MoviesTomatoesCritic?
+  dvd         DateTime?             @db.Date
+  fresh       Int?
+  lastUpdated DateTime              @db.Date
+  production  String?
+  rotten      Int?
+  viewer      MoviesTomatoesViewer
+  website     String?
+}
+
+type MoviesTomatoesCritic {
+  meter      Int?
+  numReviews Int?
+  rating     Float?
+}
+
+type MoviesTomatoesViewer {
+  meter      Int?
+  numReviews Int
+  rating     Float
+}
+
+type TheatersLocation {
+  address TheatersLocationAddress
+  geo     TheatersLocationGeo
+}
+
+type TheatersLocationAddress {
+  city    String
+  state   String
+  street1 String
+  street2 String?
+  zipcode String
+}
+
+type TheatersLocationGeo {
+  coordinates Float[]
+  type        String
+}
+
+model comments {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+}
+
+model embedded_movies {
+  id                            String                  @id @default(auto()) @map("_id") @db.ObjectId
+  awards                        EmbeddedMoviesAwards
+  cast                          String[]
+  countries                     String[]
+  directors                     String[]
+  fullplot                      String?
+  genres                        String[]
+  imdb                          EmbeddedMoviesImdb
+  languages                     String[]
+  lastupdated                   String
+  metacritic                    Int?
+  num_mflix_comments            Int
+  plot                          String?
+  plot_embedding                Bytes?
+  plot_embedding_voyage_3_large Bytes?
+  poster                        String?
+  rated                         String?
+  released                      DateTime?               @db.Date
+  runtime                       Int?
+  title                         String
+  tomatoes                      EmbeddedMoviesTomatoes?
+  type                          String
+  writers                       String[]
+  /// Multiple data types found: String: 0.5%, Int: 99.5% out of 1000 sampled entries
+  year                          Json
+}
+
+model movies {
+  id                 String          @id @default(auto()) @map("_id") @db.ObjectId
+  awards             MoviesAwards
+  cast               String[]
+  countries          String[]
+  directors          String[]
+  fullplot           String?
+  genres             String[]
+  imdb               MoviesImdb
+  languages          String[]
+  lastupdated        String
+  metacritic         Int?
+  num_mflix_comments Int
+  plot               String?
+  poster             String?
+  rated              String?
+  released           DateTime?       @db.Date
+  runtime            Int?
+  title              String
+  tomatoes           MoviesTomatoes?
+  type               String
+  writers            String[]
+  year               Int
+
+  @@fulltext([cast, fullplot, genres, title], map: "cast_text_fullplot_text_genres_text_title_text")
+}
+
+model sessions {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  jwt     String
+  user_id String @unique(map: "user_id_1")
+}
+
+model theaters {
+  id        String           @id @default(auto()) @map("_id") @db.ObjectId
+  location  TheatersLocation
+  theaterId Int
+
+  @@index([location.geo], map: "geo index")
+}
+
+model users {
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  created_at         DateTime @db.Date
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  deleted_at         Json?
+  email              String   @unique(map: "email_1")
+  first_name         String
+  image              String?
+  last_name          String
+  password           String
+  place              String
+  /// Nested objects had no data in the sample dataset to introspect a nested type.
+  preferences        Json
+  qr_code            String
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  updated_at         Json?
+  user_type          String
+  /// Could not determine type: the field only had null or empty values in the sample set.
+  verification_token Json?
+  verified_at        DateTime @db.Date
+  verify             Boolean
+}
