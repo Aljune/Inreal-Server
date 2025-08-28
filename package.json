@@ -8,11 +8,7 @@
   "scripts": {
     "dev": "nodemon api/index.js",
     "start": "node api/index.js",
-    "build": "yarn prisma generate",
-    "vercel-build": "yarn install && yarn prisma generate",
-    "studio": "yarn prisma studio",
-    "db:pull": "yarn prisma db pull",
-    "db:push": "yarn prisma db push"
+    "vercel-build": "echo 'Vercel build completed'"
   },
   "dependencies": {
     "@prisma/client": "^6.15.0",

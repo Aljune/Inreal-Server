@@ -2,22 +2,22 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 
-let PrismaClient;
-try {
-    PrismaClient = require('@prisma/client').PrismaClient;
-    console.log('✅ Prisma client loaded successfully');
-} catch (error) {
-    console.error('❌ Prisma client loading failed:', error.message);
-    try {
-        const { execSync } = require('child_process');
-        console.log('🔄 Attempting to generate Prisma client...');
-        execSync('yarn prisma generate', { stdio: 'inherit' });
-        PrismaClient = require('@prisma/client').PrismaClient;
-        console.log('✅ Prisma client generated and loaded');
-    } catch (genError) {
-        console.error('❌ Prisma generation failed:', genError.message);
-    }
-}
+// let PrismaClient;
+// try {
+//     PrismaClient = require('@prisma/client').PrismaClient;
+//     console.log('✅ Prisma client loaded successfully');
+// } catch (error) {
+//     console.error('❌ Prisma client loading failed:', error.message);
+//     try {
+//         const { execSync } = require('child_process');
+//         console.log('🔄 Attempting to generate Prisma client...');
+//         execSync('yarn prisma generate', { stdio: 'inherit' });
+//         PrismaClient = require('@prisma/client').PrismaClient;
+//         console.log('✅ Prisma client generated and loaded');
+//     } catch (genError) {
+//         console.error('❌ Prisma generation failed:', genError.message);
+//     }
+// }
 
 const app = express();
 // Middleware
