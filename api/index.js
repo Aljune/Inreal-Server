@@ -32,8 +32,8 @@ app.get("/", (req, res) => {
 });
 
 // Use it under /users
-// const userRoutes = require("../modules/user");
-// app.use("/api/users", userRoutes);
+const userRoutes = require("../modules/user");
+app.use("/api/users", userRoutes);
 
 
 // if (require.main === module) {
