@@ -9,7 +9,7 @@ const { v4: uuidv4 } = require("uuid");
 
 const { PrismaClient } = require("@prisma/client");
 const jwt = require("jsonwebtoken");
-const { sendVerificationCode, sendVerificationSuccess } = require("./mailer");
+const { sendVerificationCode, sendVerificationSuccess } = require("../modules/mailer");
 
 const prisma = new PrismaClient();
 const router = express.Router();

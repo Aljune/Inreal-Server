@@ -31,9 +31,6 @@ app.get("/", (req, res) => {
     res.json({ msg: "Express on Vercel ✅ works!" });
 });
 
-// Use it under /users
-// const userRoutes = require("../modules/user");
-// app.use("/api/users", userRoutes);
 // ✅ Health check endpoint
 app.get("/api/health", (req, res) => {
     res.json({
@@ -43,6 +40,16 @@ app.get("/api/health", (req, res) => {
     });
 });
 
+
+// Use it under /users
+const userRoutes = require("../modules/user");
+app.use("/api/users", userRoutes);
+
+
+// ✅ 404 handler
+app.use("*", (req, res) => {
+  res.status(404).json({ error: "Endpoint not found" });
+});
 
 // if (require.main === module) {
 //     const PORT = process.env.PORT || 8080;
