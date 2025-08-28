@@ -1,7 +1,9 @@
-const userService = require("./user.service");
+const userService = require("./user.services");
+const connectDB = require("./../../db/connect");
 
 const createUser = async (req, res) => {
   try {
+    await connectDB(); // ensure DB is ready
     const user = await userService.createUser(req.body);
     res.status(201).json(user);
   } catch (err) {
@@ -11,6 +13,8 @@ const createUser = async (req, res) => {
 
 const getUsers = async (req, res) => {
   try {
+    await connectDB(); // ensure DB is ready
+
     const users = await userService.getUsers();
     res.json(users);
   } catch (err) {
