@@ -1,13 +1,16 @@
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
+   host: process.env.SMTP_HOST || "smtp.gmail.com",
+    port: process.env.SMTP_PORT || 587,
     secure: false,
     auth: {
-        user: process.env.MAIL_USER || "",
-        pass: process.env.MAIL_PASS || "",
+        user: process.env.MAIL_USER || "degamoaljune14@gmail.com",
+        pass: process.env.MAIL_PASS || "pgrf fjzm dhel mzql",
     },
+    tls: {
+        rejectUnauthorized: false // Allow self-signed certificates
+    }
 });
 
 const sendVerificationCode = async (email, code, firstName, lastName) => {
