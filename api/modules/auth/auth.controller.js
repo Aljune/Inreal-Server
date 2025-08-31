@@ -1,9 +1,11 @@
-const authService = require("./auth.service");
+const authService = require("./auth.service");     // <-- filename must match
 const jwt = require("jsonwebtoken");
 
 const login = async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) return res.status(400).json({ error: "Email and password required" });
+  const { email, password } = req.body;           // <-- req.body now safe
+  if (!email || !password) {
+    return res.status(400).json({ error: "Email and password required" });
+  }
 
   try {
     const { user, token } = await authService.loginUser(email, password);

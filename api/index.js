@@ -7,10 +7,11 @@ const authRoutes = require("./modules/auth/auth.routes");
 
 const app = express();
 // Middleware
+
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors());
 // ✅ 404 handler
 
 app.get("/", (req, res) => {
