@@ -14,8 +14,12 @@ const UserSchema = new mongoose.Schema({
   updated_at: { type: mongoose.Schema.Types.Mixed, default: null },
   user_type: { type: String, required: true },
   verification_token: { type: mongoose.Schema.Types.Mixed, default: null },
-  verified_at: { type: Date, required: true },
+  verified_at: { type: Date, default: null },
   verify: { type: Boolean, default: false },
+  
+  // 🆕 Password reset fields
+  password_reset_token: { type: String, default: null },
+  password_reset_expires: { type: Date, default: null },
 });
 
 module.exports = mongoose.models.User || mongoose.model("User", UserSchema);

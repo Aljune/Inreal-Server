@@ -26,6 +26,8 @@ const login = async (req, res) => {
         verified_at: user.verified_at,
         image: user.image,
         qr_code: user.qr_code,
+        password_reset_token: user.password_reset_token,
+        password_reset_expires: user.password_reset_expires,
         created_at: user.created_at,
         updated_at: user.updated_at,
         deleted_at: user.deleted_at,
