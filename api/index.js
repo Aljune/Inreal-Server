@@ -4,6 +4,7 @@ const cors = require("cors");
 const connectDB = require("./db/connect");
 const userRoutes = require("./modules/users/user.routes");
 const authRoutes = require("./modules/auth/auth.routes");
+const missionRoutes = require("./modules/mission/mission.routes"); // Add this line
 
 const app = express();
 // Middleware
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
 // Routes
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/missions", missionRoutes); // Add this line
 
 // ✅ Health check endpoint
 app.get("/api/health", async (req, res) => {
